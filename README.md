@@ -36,6 +36,42 @@ that — it activates on its own when the work is ManimGL-shaped.
 To use it without the plugin system, copy `skills/manimgl-video/` into
 `~/.claude/skills/`.
 
+## Usage
+
+Most of the time you do not name the skill. It activates on its own once the work
+is ManimGL-shaped:
+
+> Make a scene showing how a Riemann sum converges to an integral.
+
+> This repo uses manimgl — add a scene for the chain rule.
+
+To invoke it explicitly:
+
+```
+/manimgl-video Fourier transform of a mixed waveform
+/manimgl-video eigenvectors staying on their span
+/manimgl-video the epsilon-delta definition of a limit
+/manimgl-video why a matrix determinant is a signed area
+```
+
+You get a scene outline first, then the ManimGL code, then the command to render
+it. Iterating in the preview window (`manimgl file.py Scene`, no `-w`) is the fast
+loop; writing a file is the last step, not the first.
+
+### Language
+
+On-screen text is English by default — conversing in another language does not
+change that. Ask if you want otherwise:
+
+```
+/manimgl-video the Fourier transform, with Korean labels
+```
+
+Non-Latin scripts need a platform-specific font and a different reveal animation
+(`Write` traces glyph outlines, which turns Hangul and Han characters into
+scribbles while it runs). The skill handles both; see
+[`references/api-core.md`](skills/manimgl-video/references/api-core.md).
+
 ## What is in it
 
 ```

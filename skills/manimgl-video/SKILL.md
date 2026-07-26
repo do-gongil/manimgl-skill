@@ -8,6 +8,8 @@ description: >-
   targets manimgl / manimlib / 3b1b's engine. Do NOT use for Manim Community
   Edition (`pip install manim`, `from manim import *`) — the two libraries share
   class names with different meanings; use the manim-video skill for CE work.
+argument-hint: 'manimgl-video Fourier transform of a mixed waveform | manimgl-video eigenvectors staying on their span | manimgl-video the epsilon-delta definition of a limit'
+user-invocable: true
 ---
 
 # ManimGL Video
