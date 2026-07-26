@@ -2,8 +2,8 @@
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "manimgl-skill",
   "owner": {
-    "name": "dohyun0403",
-    "url": "https://github.com/dohyun0403"
+    "name": "do-gongil",
+    "url": "https://github.com/do-gongil"
   },
   "metadata": {
     "description": "Agent skill for ManimGL — 3Blue1Brown's Manim engine, not Manim Community Edition.",
@@ -16,8 +16,8 @@
       "description": "Write ManimGL math explainer code without hallucinating Manim Community Edition APIs. Covers equations, coordinate systems and graphs, geometry, ValueTracker-driven animation, plus the install traps on Windows/MiKTeX and headless Linux.",
       "version": "0.1.0",
       "license": "MIT",
-      "homepage": "https://github.com/dohyun0403/manimgl-skill",
-      "repository": "https://github.com/dohyun0403/manimgl-skill"
+      "homepage": "https://github.com/do-gongil/manimgl-skill",
+      "repository": "https://github.com/do-gongil/manimgl-skill"
     }
   ]
 }

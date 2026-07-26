@@ -26,15 +26,16 @@ exist in manimlib at all: `Create`, `MathTex`, `Unwrite`, `Angle`, `RightAngle`,
 ## Install
 
 ```
-/plugin marketplace add dohyun0403/manimgl-skill
-/plugin install manimgl
+/plugin marketplace add do-gongil/manimgl-skill
+/plugin install manimgl@manimgl-skill
+/reload-plugins
 ```
 
 The skill then shows up as `manimgl:manimgl-video`. You normally will not type
 that — it activates on its own when the work is ManimGL-shaped.
 
 To use it without the plugin system, copy `skills/manimgl-video/` into
-`~/.claude/skills/`.
+`~/.claude/skills/`. It is then `/manimgl-video`, without the plugin namespace.
 
 ## Usage
 
@@ -48,10 +49,10 @@ is ManimGL-shaped:
 To invoke it explicitly:
 
 ```
-/manimgl-video Fourier transform of a mixed waveform
-/manimgl-video eigenvectors staying on their span
-/manimgl-video the epsilon-delta definition of a limit
-/manimgl-video why a matrix determinant is a signed area
+/manimgl:manimgl-video Fourier transform of a mixed waveform
+/manimgl:manimgl-video eigenvectors staying on their span
+/manimgl:manimgl-video the epsilon-delta definition of a limit
+/manimgl:manimgl-video why a matrix determinant is a signed area
 ```
 
 You get a scene outline first, then the ManimGL code, then the command to render
@@ -64,7 +65,7 @@ On-screen text is English by default — conversing in another language does not
 change that. Ask if you want otherwise:
 
 ```
-/manimgl-video the Fourier transform, with Korean labels
+/manimgl:manimgl-video the Fourier transform, with Korean labels
 ```
 
 Non-Latin scripts need a platform-specific font and a different reveal animation

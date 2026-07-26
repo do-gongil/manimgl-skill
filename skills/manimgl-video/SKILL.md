@@ -7,8 +7,8 @@ description: >-
   constructions, or ValueTracker-driven continuous change, and when the project
   targets manimgl / manimlib / 3b1b's engine. Do NOT use for Manim Community
   Edition (`pip install manim`, `from manim import *`) — the two libraries share
-  class names with different meanings; use the manim-video skill for CE work.
-argument-hint: 'manimgl-video Fourier transform of a mixed waveform | manimgl-video eigenvectors staying on their span | manimgl-video the epsilon-delta definition of a limit'
+  class names with different meanings; use a Manim CE skill or the CE docs instead.
+argument-hint: 'Fourier transform of a mixed waveform | eigenvectors staying on their span | the epsilon-delta definition of a limit'
 user-invocable: true
 ---
 
@@ -21,7 +21,7 @@ mean opposite things. Confirm which engine the project uses before writing a lin
 Detect the engine from the project:
 
 - `from manimlib import *` / `manimgl` CLI / `custom_config.yml` → **ManimGL, this skill**
-- `from manim import *` / `manim -ql` CLI / `manim.cfg` → **Manim CE, stop and use `manim-video`**
+- `from manim import *` / `manim -ql` CLI / `manim.cfg` → **Manim CE, stop — this skill does not apply**
 
 ## Do not confuse with Manim CE
 

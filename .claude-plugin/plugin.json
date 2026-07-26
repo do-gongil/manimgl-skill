@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "description": "Write ManimGL (3Blue1Brown's Manim) math explainer code without hallucinating Manim Community Edition APIs. Signatures extracted from manimlib source; every example verified by rendering.",
   "author": {
-    "name": "dohyun0403",
-    "url": "https://github.com/dohyun0403"
+    "name": "do-gongil",
+    "url": "https://github.com/do-gongil"
   },
-  "homepage": "https://github.com/dohyun0403/manimgl-skill",
-  "repository": "https://github.com/dohyun0403/manimgl-skill",
+  "homepage": "https://github.com/do-gongil/manimgl-skill",
+  "repository": "https://github.com/do-gongil/manimgl-skill",
   "license": "MIT",
   "keywords": [
     "manim",
