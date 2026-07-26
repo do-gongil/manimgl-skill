@@ -86,6 +86,12 @@ Tighten typography, color, and spacing after motion works — not before.
 
 ## On-screen text
 
+**Default to English.** Labels, titles and annotations are English unless the
+user asks for another language, or the surrounding project is already in one.
+Conversing in another language is not by itself such a request — ask if unsure.
+Non-Latin scripts additionally need the font and animation care described in
+[references/api-core.md](references/api-core.md).
+
 The animation carries the argument. A sentence that narrates what the viewer is
 already watching competes with the visual for attention and duplicates whatever a
 narrator would say over it.
@@ -94,9 +100,9 @@ narrator would say over it.
 
 Cut — prose that restates the motion:
 
-- "읽는 순서대로 한 줄로 편다" over a grid that is visibly unrolling into a row
-- "이게 없으면 패치를 섞어도 결과가 똑같다"
-- "12개 블록을 지나며 전체 패치의 정보를 모았다"
+- "Unroll it into one row in reading order" over a grid that is visibly unrolling
+- "Without this, shuffling the patches changes nothing"
+- "After 12 blocks it has gathered information from every patch"
 
 Keep — anything the picture cannot state on its own:
 

@@ -52,7 +52,9 @@ Colour shorthand at construction: `Tex(R"x + y", t2c={"x": BLUE, "y": RED})`.
 
 ### CJK text
 
-Two rules, both established by rendering rather than by reasoning.
+On-screen text defaults to English. Read this section only when the user has
+asked for Korean, Japanese or Chinese. Both rules below were established by
+rendering rather than by reasoning, and neither failure mode raises an error.
 
 **Pick the font per platform.** Pango substitutes a missing font silently — no
 error, just the wrong typeface:
