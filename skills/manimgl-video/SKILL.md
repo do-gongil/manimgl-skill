@@ -109,16 +109,16 @@ Cut — prose that restates the motion:
 Keep — anything the picture cannot state on its own:
 
 - labels and names: axis titles, `LayerNorm`, `Q`, `K`, `V`
-- counts, units, and specs: `4×4 = 16개 패치`, `224×224 → 16×16 패치 196개`
+- counts, units, and specs: `4×4 = 16 patches`, `224×224 → 196 patches of 16×16`
 - formulas: `Attn = softmax(QK^T/√d)V`
 - emphasis: color coding, a highlighted element, `Indicate`, `FlashAround`
 
 Emphasis is not narration — keep every bit of it. Marking one patch red and
 tracking it across scenes explains more than a caption would.
 
-Prefer noun phrases to sentences, including for section titles: `1. 패치 분할`
-over `1. 이미지를 패치로 자른다`. Where a scene seems to need a sentence, the
-usual fix is a clearer visual, not a longer caption.
+Prefer noun phrases to sentences, including for section titles: `1. Patch split`
+over `1. The image is cut into patches`. Where a scene seems to need a sentence,
+the usual fix is a clearer visual, not a longer caption.
 
 ## Reference files
 
