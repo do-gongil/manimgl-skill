@@ -6,6 +6,13 @@ An agent skill for **ManimGL** — 3Blue1Brown's own Manim engine.
 > "Manim", share class names, and give some of those names *opposite* meanings.
 > If your project uses `from manim import *`, this skill is the wrong one.
 
+## Demo
+
+A Vision Transformer explainer scene, written with this skill and rendered with
+`manimgl`:
+
+https://github.com/user-attachments/assets/deaefc64-6e75-4a4c-86d7-c8dabcf4b996
+
 ## Which Manim do you have?
 
 | | ManimGL (this skill) | Manim CE |
