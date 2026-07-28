@@ -8,8 +8,7 @@ An agent skill for **ManimGL** — 3Blue1Brown's own Manim engine.
 
 ## Demo
 
-A Vision Transformer explainer scene, written with this skill and rendered with
-`manimgl`:
+'/manimgl-video About VisionTransformer'
 
 https://github.com/user-attachments/assets/deaefc64-6e75-4a4c-86d7-c8dabcf4b996
 
