@@ -31,6 +31,8 @@ exist in manimlib at all: `Create`, `MathTex`, `Unwrite`, `Angle`, `RightAngle`,
 
 ## Install
 
+### Claude Code
+
 ```
 /plugin marketplace add do-gongil/manimgl-skill
 /plugin install manimgl@manimgl-skill
@@ -43,11 +45,22 @@ that — it activates on its own when the work is ManimGL-shaped.
 To use it without the plugin system, copy `skills/manimgl-video/` into
 `~/.claude/skills/`. It is then `/manimgl-video`, without the plugin namespace.
 
-For Codex and other agents that read the open SKILL.md standard, copy the same
-`skills/manimgl-video/` into `~/.agents/skills/` (user scope) or
-`<your-repo>/.agents/skills/` (repo scope). Codex invokes it as `$manimgl-video`.
-The `argument-hint` and `user-invocable` keys are Claude Code extras and are
-ignored there.
+### Codex
+
+Codex reads the same open SKILL.md standard, but from `.agents/skills` instead.
+There is no plugin step — copy the skill folder in:
+
+```sh
+git clone --depth 1 https://github.com/do-gongil/manimgl-skill
+mkdir -p ~/.agents/skills
+cp -r manimgl-skill/skills/manimgl-video ~/.agents/skills/
+```
+
+Use `<your-repo>/.agents/skills/` instead of `~/.agents/skills/` to scope it to a
+single repository. Invoke it as `$manimgl-video`, or let it activate on its own.
+
+The same copy works for any agent that reads the standard. `argument-hint` and
+`user-invocable` are Claude Code extras and are ignored elsewhere.
 
 ## Usage
 
