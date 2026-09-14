@@ -43,6 +43,12 @@ that — it activates on its own when the work is ManimGL-shaped.
 To use it without the plugin system, copy `skills/manimgl-video/` into
 `~/.claude/skills/`. It is then `/manimgl-video`, without the plugin namespace.
 
+For Codex and other agents that read the open SKILL.md standard, copy the same
+`skills/manimgl-video/` into `~/.agents/skills/` (user scope) or
+`<your-repo>/.agents/skills/` (repo scope). Codex invokes it as `$manimgl-video`.
+The `argument-hint` and `user-invocable` keys are Claude Code extras and are
+ignored there.
+
 ## Usage
 
 Most of the time you do not name the skill. It activates on its own once the work
