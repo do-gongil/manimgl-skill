@@ -141,7 +141,7 @@ the usual fix is a clearer visual, not a longer caption.
 
 ## Reference files
 
-Open only what the current task needs; do not preload all four.
+Open only what the current task needs; do not preload all five. A scene longer than two or three beats should start from `patterns.md`.
 
 | File | Open when |
 |------|-----------|
@@ -149,6 +149,7 @@ Open only what the current task needs; do not preload all four.
 | [references/api-graphs.md](references/api-graphs.md) | Axes, NumberPlane, function graphs, ValueTracker, updaters |
 | [references/animations.md](references/animations.md) | Which animation class to use, timing, lag_ratio, rate functions |
 | [references/cli-config.md](references/cli-config.md) | CLI flags, custom_config.yml, reproducing the 3b1b look |
+| [references/patterns.md](references/patterns.md) | Structuring a multi-beat scene: beat methods, helpers, computed numbers, cleanup after transforms |
 
 Runnable starting points, verified against manimlib source:
 

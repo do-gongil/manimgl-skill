@@ -47,6 +47,7 @@ def check_python(rows, fixes):
 
 def check_manimlib(rows, fixes):
     warnings.filterwarnings("ignore")  # manimlib's pkg_resources deprecation notice
+    argv, sys.argv = sys.argv, sys.argv[:1]  # manimlib parses sys.argv on import
     try:
         m = importlib.import_module("manimlib")
     except ImportError as e:
@@ -63,6 +64,8 @@ def check_manimlib(rows, fixes):
         else:
             rows.append((FAIL, f"manimlib import failed: {e}"))
         return
+    finally:
+        sys.argv = argv
     rows.append((OK, f"manimlib {getattr(m, '__version__', '?')} at {os.path.dirname(m.__file__)}"))
     if not shutil.which("manimgl"):
         rows.append((WARN, "manimgl script not on PATH (pip's Scripts dir); run `python -m manimlib` instead"))

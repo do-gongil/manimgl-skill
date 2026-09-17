@@ -39,7 +39,8 @@ exist in manimlib at all: `Create`, `MathTex`, `Unwrite`, `Angle`, `RightAngle`,
 /reload-plugins
 ```
 
-The skill then shows up as `manimgl:manimgl-video`. You normally will not type
+The skill then shows up as `manimgl:manimgl-video`, and `/manimgl:init` scaffolds a
+new project directory (environment check, `custom_config.yml`, `common.py`, `CLAUDE.md`). You normally will not type
 that — it activates on its own when the work is ManimGL-shaped.
 
 To use it without the plugin system, copy `skills/manimgl-video/` into
@@ -116,10 +117,12 @@ skills/manimgl-video/
 │  ├─ api-core.md            Tex/Text, geometry, VGroup, positioning, colors, CJK
 │  ├─ api-graphs.md          Axes, NumberPlane, function graphs, ValueTracker, updaters
 │  ├─ animations.md          animation catalog, timing, lag_ratio, rate functions
-│  └─ cli-config.md          CLI flags, custom_config.yml, install traps per platform
+│  ├─ cli-config.md          CLI flags, custom_config.yml, install traps per platform
+│  └─ patterns.md            structuring a multi-beat scene, taken from rendered projects
 └─ assets/
    ├─ doctor.py              environment check + custom_config.yml generator, stdlib only
    ├─ snapshot.py            PNG of the scene at chosen animation indices, for visual checks
+   ├─ templates/             common.py helpers + project CLAUDE.md, used by /manimgl:init
    ├─ smoke_test.py          geometry + Text only — no LaTeX needed
    └─ equation_graph.py      Tex + Axes + ValueTracker
 ```
