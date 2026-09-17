@@ -63,6 +63,9 @@ single repository. Invoke it as `$manimgl-video`, or let it activate on its own.
 The same copy works for any agent that reads the standard. `argument-hint` and
 `user-invocable` are Claude Code extras and are ignored elsewhere.
 
+Any other agent (Cursor, Copilot, or Codex working inside this repo) can also read [`AGENTS.md`](AGENTS.md), which points at
+the same skill files.
+
 ## Usage
 
 Most of the time you do not name the skill. It activates on its own once the work
