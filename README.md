@@ -14,7 +14,7 @@ alpha-compositing numbers are computed in numpy, not typed in.
 
 `/manimgl:manimgl-video 3D Gaussian Splatting, English labels, no LaTeX`
 
-<!-- gaussian-splatting-video -->
+https://github.com/user-attachments/assets/37536ec2-60cd-4f03-b569-8ae09c0df91d
 
 `/manimgl:manimgl-video About VisionTransformer`
 
