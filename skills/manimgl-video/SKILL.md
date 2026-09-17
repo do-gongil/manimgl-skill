@@ -79,10 +79,29 @@ someone else to render.
    fast feedback loop; writing a file on every iteration wastes minutes.
 3. Add `self.embed()` at the point of interest to drop into an IPython shell with
    the scene live. Inspect and nudge mobjects there instead of re-rendering.
-4. Once composition is settled, `-w -l` for a low-quality file to judge timing.
-5. Fixing a late beat? `-n <index>` starts at animation N instead of replaying
+4. Look at the frames before anyone else does. `python assets/snapshot.py file.py Scene --list`
+   numbers every `self.play` / `self.wait`; `python assets/snapshot.py file.py Scene 4 9 14`
+   then writes `frames/Scene_004.png` and so on, a few seconds each, no window needed.
+   Open each PNG and check it against the list below. Re-snapshot only the beats
+   you changed. When the scene is written for someone else to render, this is
+   the only visual check available — do it before handing the code over.
+5. Once composition is settled, `-w -l` for a low-quality file to judge timing.
+6. Fixing a late beat? `-n <index>` starts at animation N instead of replaying
    everything from the top.
-6. Only after timing is final, render `--hd` or `--uhd`.
+7. Only after timing is final, render `--hd` or `--uhd`.
+
+What to look for in a snapshot:
+
+- Text crossing other text or a shape — the usual result of `next_to` without a
+  `buff`, or of a label placed before its target was scaled.
+- Anything touching or cut off by the frame edge. The frame is 14.2 × 8 units;
+  `to_edge` and `.set_width(FRAME_WIDTH - 1)` are the fixes.
+- Leftovers from an earlier beat: a mobject never faded out, or one still drifting
+  because its updater was never removed.
+- Labels that are hard to read at 480p are too small at 1080p too. Raise
+  `font_size`, do not rely on the final render.
+- A `Tex` that rendered as prose, or a `TexText` that rendered as math — the
+  silent CE/GL mix-up from the table above.
 
 Tighten typography, color, and spacing after motion works — not before.
 
@@ -134,6 +153,7 @@ Open only what the current task needs; do not preload all four.
 Runnable starting points, verified against manimlib source:
 
 - [assets/doctor.py](assets/doctor.py) — stdlib-only environment check: manimlib, ffmpeg, LaTeX/MiKTeX, dvisvgm, CJK font, `custom_config.yml` encoding and stale paths. `--write-config` writes a `custom_config.yml` with the fixes. Run this first when a render fails for a reason that is not the scene code.
+- [assets/snapshot.py](assets/snapshot.py) — writes a PNG of the scene state at chosen animation indices (`-s -w -n 0,K` per index). The visual check in workflow step 4.
 - [assets/smoke_test.py](assets/smoke_test.py) — geometry and `Text` only, **no LaTeX required**. Use this first to prove the install works.
 - [assets/equation_graph.py](assets/equation_graph.py) — `Tex` + `Axes` + `ValueTracker`. Requires a working LaTeX install.
 

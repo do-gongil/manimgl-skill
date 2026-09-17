@@ -19,6 +19,7 @@ import platform
 import shutil
 import subprocess
 import sys
+import warnings
 
 OK, WARN, FAIL = "ok  ", "WARN", "FAIL"
 CJK_FONTS = {
@@ -45,13 +46,26 @@ def check_python(rows, fixes):
 
 
 def check_manimlib(rows, fixes):
+    warnings.filterwarnings("ignore")  # manimlib's pkg_resources deprecation notice
     try:
         m = importlib.import_module("manimlib")
     except ImportError as e:
-        rows.append((FAIL, f"manimlib not importable in this interpreter ({e.name})"))
-        fixes.append("pip install manimgl   # not 'manim', that is Community Edition")
+        if e.name == "manimlib":
+            rows.append((FAIL, "manimlib not importable in this interpreter"))
+            fixes.append("pip install manimgl   # not 'manim', that is Community Edition")
+        elif e.name == "pkg_resources":
+            rows.append((FAIL, "pkg_resources missing: setuptools>=81 dropped it and manimlib 1.7.2 imports it at startup"))
+            fixes.append('pip install "setuptools<81"')
+        elif "DLL load failed" in str(e):
+            rows.append((FAIL, f"a compiled extension is blocked from loading: {e}"))
+            fixes.append("Windows Smart App Control can reject a wheel's .pyd; another build usually passes, "
+                         "e.g. pip install --force-reinstall scipy==1.16.2")
+        else:
+            rows.append((FAIL, f"manimlib import failed: {e}"))
         return
     rows.append((OK, f"manimlib {getattr(m, '__version__', '?')} at {os.path.dirname(m.__file__)}"))
+    if not shutil.which("manimgl"):
+        rows.append((WARN, "manimgl script not on PATH (pip's Scripts dir); run `python -m manimlib` instead"))
     if importlib.util.find_spec("manim") is not None:
         rows.append((WARN, "Manim CE ('manim') is also installed; keep imports as 'from manimlib import *'"))
 

@@ -84,6 +84,15 @@ You get a scene outline first, then the ManimGL code, then the command to render
 it. Iterating in the preview window (`manimgl file.py Scene`, no `-w`) is the fast
 loop; writing a file is the last step, not the first.
 
+Before handing code over, the skill snapshots the scene at beat boundaries and
+looks at the frames — text overlap, clipped edges, leftovers from earlier beats
+are caught there rather than in the final render:
+
+```
+python skills/manimgl-video/assets/snapshot.py scene.py MyScene --list   # number the beats
+python skills/manimgl-video/assets/snapshot.py scene.py MyScene 4 9 14   # frames/MyScene_004.png ...
+```
+
 ### Language
 
 On-screen text is English by default — conversing in another language does not
@@ -110,6 +119,7 @@ skills/manimgl-video/
 │  └─ cli-config.md          CLI flags, custom_config.yml, install traps per platform
 └─ assets/
    ├─ doctor.py              environment check + custom_config.yml generator, stdlib only
+   ├─ snapshot.py            PNG of the scene at chosen animation indices, for visual checks
    ├─ smoke_test.py          geometry + Text only — no LaTeX needed
    └─ equation_graph.py      Tex + Axes + ValueTracker
 ```

@@ -128,6 +128,24 @@ Note that 3b1b's own config also sets
 repo's private `custom/` package. Do not copy that line — for standalone work it
 must stay `from manimlib import *`.
 
+## Snapshot a frame at a chosen beat
+
+`-s` saves the final frame instead of a movie, **and needs `-w` to write it** —
+`-s` alone just skips to the end in the preview window. Combine it with the
+two-value form of `-n` to stop early:
+
+```bash
+manimgl file.py Scene -s -w -l -n 0,7    # state before animation 7 -> videos/Scene_0_7.png
+manimgl file.py Scene -s -w -l           # final frame               -> videos/Scene.png
+```
+
+The index counts `self.play()` and `self.wait()` calls from 0, in execution
+order (`Scene.num_plays`). With `-n 0,K` every animation is skipped — end states
+are applied instantly — and `construct()` is cut off right before animation K, so
+a frame costs a few seconds regardless of scene length. `--file_name` and
+`--video_dir` override the output name and folder.
+[assets/snapshot.py](../assets/snapshot.py) wraps this for a list of indices.
+
 ## Output location
 
 Files land under `directories.subdirs.output` (default `videos`), relative to
@@ -157,6 +175,35 @@ a non-ASCII config, an `ffmpeg_bin` path left over from a previous Python instal
 Install with `pip install manimgl`, or from a clone with `pip install -e .`.
 The PyPI package name differs from the repository name; `pip install manim`
 installs the Community Edition instead, which is a different library.
+
+### setuptools 81+: `No module named 'pkg_resources'`
+
+`manimlib/__init__.py` starts with `import pkg_resources` to read its own
+version. setuptools removed `pkg_resources` in release 81, and a fresh Python
+install pulls the newest setuptools, so `import manimlib` fails before anything
+else runs. Pin it:
+
+```bash
+pip install "setuptools<81"
+```
+
+Observed with manimgl 1.7.2 and setuptools 84.
+
+### `manimgl` command not found
+
+pip installs the `manimgl` script into the interpreter's `Scripts` directory,
+which a per-user Python on Windows often leaves off PATH. `python -m manimlib`
+takes the same arguments and needs no PATH change.
+
+### Windows Smart App Control blocks a wheel's DLL
+
+`ImportError: DLL load failed while importing _odepack` on `import manimlib`
+(Korean Windows gives the reason as an application control policy block) means
+Smart App Control refused one of scipy's compiled extensions. The Python code is
+fine; the policy rejects that particular binary. Another build of the same
+package usually passes — `pip install --force-reinstall scipy==1.16.2` worked
+where 1.18.1 was blocked. Turning Smart App Control off is the other option,
+and a system-wide one.
 
 ### Python 3.13: install audioop-lts
 

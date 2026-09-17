@@ -1,6 +1,7 @@
 # manimgl render output
 videos/
 images/
+frames/
 Tex/
 *.mp4
 *.mov
