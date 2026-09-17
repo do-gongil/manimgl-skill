@@ -69,11 +69,27 @@ cp -r manimgl-skill/skills/manimgl-video ~/.agents/skills/
 Use `<your-repo>/.agents/skills/` instead of `~/.agents/skills/` to scope it to a
 single repository. Invoke it as `$manimgl-video`, or let it activate on its own.
 
-The same copy works for any agent that reads the standard. `argument-hint` and
-`user-invocable` are Claude Code extras and are ignored elsewhere.
+### Other agents
 
-Any other agent (Cursor, Copilot, or Codex working inside this repo) can also read [`AGENTS.md`](AGENTS.md), which points at
-the same skill files.
+`SKILL.md` is the open [Agent Skills](https://agentskills.io) format, so the same
+folder works anywhere the format is read. `.agents/skills/` is the cross-client
+convention most tools scan; the native locations differ:
+
+| Agent | Project-level | User-level |
+|---|---|---|
+| any skills-compatible agent | `.agents/skills/` | `~/.agents/skills/` |
+| Cursor | `.cursor/skills/` | — |
+| GitHub Copilot | `.github/skills/` | — |
+| Gemini CLI | `.gemini/skills/` | `~/.gemini/skills/` |
+| OpenCode | `.opencode/skills/` | — |
+
+Copy `skills/manimgl-video/` into whichever of these your tool reads. `argument-hint`
+and `user-invocable` in the frontmatter are Claude Code extras and are ignored
+elsewhere. Paths are as each tool documented them in 2026; check the tool's own
+docs if a skill does not show up.
+
+Agents that read a repo-level [`AGENTS.md`](AGENTS.md) (Codex, Cursor, Copilot and
+others) get the same pointers when working inside this repository.
 
 ## Usage
 
