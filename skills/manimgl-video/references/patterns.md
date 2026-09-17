@@ -24,9 +24,9 @@ class VisionTransformer(Scene):
 
 State crosses beats only as `self.<name>` set at the end of the producing
 method. `construct()` then reads as the outline and reordering a beat is one
-line. `snapshot.py --list` numbers `play`/`wait` calls in source order, which
-matches execution order exactly when the beat methods are defined in the order
-`construct()` calls them — keep them that way.
+line. `snapshot.py --list` runs the scene once with animations skipped and
+numbers `play`/`wait` calls as they execute, so a shared helper such as
+`set_title()` is counted every time it is called.
 
 Symptom without it: a 600-line `construct()` where a local variable from minute
 one is still being referenced in minute four.

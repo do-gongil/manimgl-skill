@@ -1,6 +1,6 @@
 """Snapshot a ManimGL scene at chosen beats so the frames can be inspected as images.
 
-    python snapshot.py file.py Scene --list     # number every self.play / self.wait call
+    python snapshot.py file.py Scene --list     # run once (skipped) and number every play/wait as it happens
     python snapshot.py file.py Scene 3 7 12     # frames after animations 3, 7 and 12
     python snapshot.py file.py Scene            # final frame only
     python snapshot.py file.py Scene 3 7 --hd   # 1080p instead of the default 480p
@@ -20,17 +20,38 @@ import re
 import subprocess
 import sys
 
-CALL_RE = re.compile(r"self\.(play|wait)\(")
+TRACE = """
+import inspect, sys
+sys.argv = ["manimgl", {file!r}, {scene!r}, "-s", "-w", "-l", "--video_dir", {tmp!r}, "--file_name", "_trace"]
+import manimlib
+from manimlib.scene.scene import Scene
+_orig = Scene.pre_play
+def pre_play(self):
+    for fr in inspect.stack()[1:]:
+        if fr.filename.replace("\\\\", "/").endswith({file!r}.replace("\\\\", "/")):
+            src = fr.code_context[0].strip() if fr.code_context else ""
+            print(f"SNAP {{self.num_plays:3d}}  L{{fr.lineno:<4d}} {{src}}")
+            break
+    _orig(self)
+Scene.pre_play = pre_play
+from manimlib.__main__ import main
+main()
+"""
 
 
-def list_calls(path):
-    # ponytail: source order, not runtime order. Right when construct() is linear or
-    # calls its beat methods in the order they are defined; otherwise use the numbers
-    # manimgl prints in front of each progress bar during a normal preview.
-    with open(path, encoding="utf-8") as f:
-        for lineno, line in enumerate(f, 1):
-            for _ in CALL_RE.finditer(line):
-                yield lineno, line.strip()
+def list_calls(scene_file, scene):
+    """Runtime numbering: run the scene with every animation skipped and hook
+    Scene.pre_play, so helper methods called from several beats are counted
+    each time they run (a source-order grep gets that wrong)."""
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmp:
+        code = TRACE.format(file=scene_file, scene=scene, tmp=tmp)
+        p = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True)
+    lines = [ln[5:] for ln in p.stdout.splitlines() if ln.startswith("SNAP ")]
+    if p.returncode != 0 or not lines:
+        tail = "\n".join((p.stdout + p.stderr).strip().splitlines()[-15:])
+        raise SystemExit(f"trace run failed:\n{tail}")
+    return lines
 
 
 def render(scene_file, scene, index, out_dir, quality):
@@ -63,8 +84,7 @@ def main():
             raise SystemExit(f"no `class {args.scene}(` in {args.scene_file}")
 
     if args.list:
-        for i, (lineno, text) in enumerate(list_calls(args.scene_file)):
-            print(f"{i:3d}  L{lineno:<4d} {text}")
+        print("\n".join(list_calls(args.scene_file, args.scene)))
         return
 
     targets = args.indices or [None]

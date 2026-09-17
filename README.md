@@ -8,7 +8,15 @@ An agent skill for **ManimGL** — 3Blue1Brown's own Manim engine.
 
 ## Demo
 
-'/manimgl-video About VisionTransformer'
+Two explainers written with the skill. Source for the second is in
+[`examples/`](examples/); it needs no LaTeX (`Text` and geometry only), and its
+alpha-compositing numbers are computed in numpy, not typed in.
+
+`/manimgl:manimgl-video 3D Gaussian Splatting, English labels, no LaTeX`
+
+<!-- gaussian-splatting-video -->
+
+`/manimgl:manimgl-video About VisionTransformer`
 
 https://github.com/user-attachments/assets/deaefc64-6e75-4a4c-86d7-c8dabcf4b996
 
@@ -39,9 +47,10 @@ exist in manimlib at all: `Create`, `MathTex`, `Unwrite`, `Angle`, `RightAngle`,
 /reload-plugins
 ```
 
-The skill then shows up as `manimgl:manimgl-video`, and `/manimgl:init` scaffolds a
-new project directory (environment check, `custom_config.yml`, `common.py`, `CLAUDE.md`). You normally will not type
-that — it activates on its own when the work is ManimGL-shaped.
+The skill then shows up as `manimgl:manimgl-video`. You normally will not type
+that — it activates on its own when the work is ManimGL-shaped. `/manimgl:init`
+scaffolds a new project directory: environment check, `custom_config.yml`,
+`common.py`, `CLAUDE.md`, and one rendered frame to prove the install.
 
 To use it without the plugin system, copy `skills/manimgl-video/` into
 `~/.claude/skills/`. It is then `/manimgl-video`, without the plugin namespace.
@@ -129,6 +138,9 @@ skills/manimgl-video/
    ├─ smoke_test.py          geometry + Text only — no LaTeX needed
    └─ equation_graph.py      Tex + Axes + ValueTracker
 ```
+
+`examples/gaussian_splatting.py` is a complete seven-beat scene written with the
+skill, kept as a reference for structure (see `references/patterns.md`).
 
 ## How it was built
 
