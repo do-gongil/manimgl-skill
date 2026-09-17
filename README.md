@@ -109,6 +109,7 @@ skills/manimgl-video/
 │  ├─ animations.md          animation catalog, timing, lag_ratio, rate functions
 │  └─ cli-config.md          CLI flags, custom_config.yml, install traps per platform
 └─ assets/
+   ├─ doctor.py              environment check + custom_config.yml generator, stdlib only
    ├─ smoke_test.py          geometry + Text only — no LaTeX needed
    └─ equation_graph.py      Tex + Axes + ValueTracker
 ```
@@ -132,6 +133,9 @@ removed in Python 3.13 — all came from hitting them.
 - FFmpeg (only for writing files; preview does not need it)
 - OpenGL
 - LaTeX — only for `Tex`, `TexText`, `Brace`. `smoke_test.py` runs without it.
+
+Run `python skills/manimgl-video/assets/doctor.py` to check all of these at once;
+add `--write-config` to generate a `custom_config.yml` with the platform fixes applied.
 
 Platform-specific setup, including headless Linux without root, is in
 [`skills/manimgl-video/references/cli-config.md`](skills/manimgl-video/references/cli-config.md).

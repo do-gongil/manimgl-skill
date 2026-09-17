@@ -144,6 +144,16 @@ organised.
 - OpenGL — required always; a headless machine with no GL context cannot render
 - LaTeX (texlive / MiKTeX) — required only for `Tex`, `TexText`, `Brace`
 
+Check all of the above in one go, before or after installing:
+
+```bash
+python assets/doctor.py                 # report: python, manimlib, ffmpeg, LaTeX, font, config
+python assets/doctor.py --write-config  # also write ./custom_config.yml with the fixes below
+```
+
+It catches the traps in this section mechanically — MiKTeX's `-no-pdf` clash,
+a non-ASCII config, an `ffmpeg_bin` path left over from a previous Python install.
+
 Install with `pip install manimgl`, or from a clone with `pip install -e .`.
 The PyPI package name differs from the repository name; `pip install manim`
 installs the Community Edition instead, which is a different library.

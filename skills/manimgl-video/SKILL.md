@@ -133,6 +133,7 @@ Open only what the current task needs; do not preload all four.
 
 Runnable starting points, verified against manimlib source:
 
+- [assets/doctor.py](assets/doctor.py) — stdlib-only environment check: manimlib, ffmpeg, LaTeX/MiKTeX, dvisvgm, CJK font, `custom_config.yml` encoding and stale paths. `--write-config` writes a `custom_config.yml` with the fixes. Run this first when a render fails for a reason that is not the scene code.
 - [assets/smoke_test.py](assets/smoke_test.py) — geometry and `Text` only, **no LaTeX required**. Use this first to prove the install works.
 - [assets/equation_graph.py](assets/equation_graph.py) — `Tex` + `Axes` + `ValueTracker`. Requires a working LaTeX install.
 
