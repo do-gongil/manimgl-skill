@@ -1,5 +1,5 @@
 # manimgl-skill
-
+**Do your project explain using manimgl skills**
 An agent skill for **ManimGL** — 3Blue1Brown's own Manim engine.
 
 > **This is not Manim Community Edition.** The two libraries are both called
