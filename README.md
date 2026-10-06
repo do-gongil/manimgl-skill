@@ -109,7 +109,17 @@ To invoke it explicitly:
 /manimgl:manimgl-video why a matrix determinant is a signed area
 ```
 
-You get a scene outline first, then the ManimGL code, then the command to render
+For a new video, the skill first asks one round of questions — audience, the one
+idea the viewer should leave with, length, on-screen language, format (16:9 or
+9:16, resolution, background) and whether a voiceover will be added. Each has a
+default you can accept; anything your request already states is not asked, and
+edits to an existing scene skip the round. Whatever you say up front is not asked again:
+
+```
+/manimgl:manimgl-video eigenvectors for undergrads, one 60 s scene, 9:16, no narration
+```
+
+You then get a scene outline, then the ManimGL code, then the command to render
 it. Iterating in the preview window (`manimgl file.py Scene`, no `-w`) is the fast
 loop; writing a file is the last step, not the first.
 
