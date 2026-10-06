@@ -71,6 +71,33 @@ Every scene subclasses `Scene`, `InteractiveScene`, or `ThreeDScene` and defines
 correct for headless rendering and is the safer default when writing code for
 someone else to render.
 
+## Ask before writing
+
+A new video starts with one round of questions, asked together in a single
+message (in Claude Code, one `AskUserQuestion` call). Skip any question the
+request or the project already answers; skip the round entirely when all are
+answered, or when the task is an edit to an existing scene.
+
+1. **Audience** — who watches: high school, undergraduate, specialist? Sets how
+   much is shown versus assumed.
+2. **Core idea** — the one thing the viewer should leave understanding. This
+   becomes the outline's spine; anything that does not serve it is cut.
+3. **Length** — rough duration or number of scenes (e.g. one 30 s scene, three
+   to five scenes, ~3 min).
+4. **On-screen language** — English (the default, see below) or another.
+5. **Format** — 16:9 landscape or 9:16 vertical; final resolution (`--hd`,
+   `--uhd`); 3b1b black background or ManimGL's default grey. Vertical renders
+   with `-r 1080x1920`: the frame keeps height 8 and narrows to 4.5 units wide,
+   while the `FRAME_WIDTH` constant stays 14.2 — lay out against
+   `self.frame.get_width()` instead.
+6. **Narration** — will a voiceover be laid over it? With narration, keep text
+   to labels and pace beats with `self.wait()` gaps; without it, the visuals
+   carry the argument alone.
+
+Give each question a default as its first option so the user can accept quickly.
+Do not ask about engine, LaTeX, or fonts — detect those (`assets/doctor.py`).
+Restate the answers in one line at the top of the scene outline.
+
 ## Workflow
 
 1. Write the scene outline in prose first — one thing proved per scene. Do not
