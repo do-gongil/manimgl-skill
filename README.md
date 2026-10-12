@@ -16,9 +16,13 @@ alpha-compositing numbers are computed in numpy, not typed in.
 
 https://github.com/user-attachments/assets/37536ec2-60cd-4f03-b569-8ae09c0df91d
 
-`/manimgl:manimgl-video About VisionTransformer`
+`/manimgl:manimgl-video About SDOCT`
 
-https://github.com/user-attachments/assets/deaefc64-6e75-4a4c-86d7-c8dabcf4b996
+
+
+https://github.com/user-attachments/assets/ce1f7e94-9c07-4027-b695-eb7ca70364bd
+
+
 
 ## Which Manim do you have?
 
