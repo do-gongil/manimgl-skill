@@ -73,6 +73,17 @@ cp -r manimgl-skill/skills/manimgl-video ~/.agents/skills/
 Use `<your-repo>/.agents/skills/` instead of `~/.agents/skills/` to scope it to a
 single repository. Invoke it as `$manimgl-video`, or let it activate on its own.
 
+### GitHub Copilot
+
+Copilot reads skills per repository from `.github/skills/`. Same copy, run from
+the root of the repository you want it in:
+
+```sh
+git clone --depth 1 https://github.com/do-gongil/manimgl-skill /tmp/manimgl-skill
+mkdir -p .github/skills
+cp -r /tmp/manimgl-skill/skills/manimgl-video .github/skills/
+```
+
 ### Other agents
 
 `SKILL.md` is the open [Agent Skills](https://agentskills.io) format, so the same
@@ -187,13 +198,21 @@ removed in Python 3.13 — all came from hitting them.
 
 ## Requirements
 
-- Python 3.7+, `pip install manimgl`
+- Python and `pip install manimgl`. Verified with manimgl 1.7.2 on Python 3.13;
+  older Pythons were not tested here. A fresh install of that combination breaks
+  at import in two places, both with a one-line workaround:
+  - Python 3.13+ removed `audioop`, which manimgl needs through `pydub` —
+    `pip install audioop-lts`
+  - setuptools 81+ removed `pkg_resources`, which manimlib 1.7.2 imports at
+    startup — `pip install "setuptools<81"`
 - FFmpeg (only for writing files; preview does not need it)
 - OpenGL
 - LaTeX — only for `Tex`, `TexText`, `Brace`. `smoke_test.py` runs without it.
 
-Run `python skills/manimgl-video/assets/doctor.py` to check all of these at once;
+Run `python skills/manimgl-video/assets/doctor.py` to check all of these at once.
+It detects both breakers above and prints the command that fixes each failure;
 add `--write-config` to generate a `custom_config.yml` with the platform fixes applied.
+Installing the plugin does not run it — `/manimgl:init` does, as its first step.
 
 Platform-specific setup, including headless Linux without root, is in
 [`skills/manimgl-video/references/cli-config.md`](skills/manimgl-video/references/cli-config.md).
