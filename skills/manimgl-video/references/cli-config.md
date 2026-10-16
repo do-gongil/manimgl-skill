@@ -157,7 +157,7 @@ organised.
 
 ## Requirements
 
-- Python 3.7+
+- Python — verified with manimgl 1.7.2 on Python 3.13 (needs `audioop-lts` and `setuptools<81`; see below)
 - FFmpeg — required for `-w`; preview alone does not need it
 - OpenGL — required always; a headless machine with no GL context cannot render
 - LaTeX (texlive / MiKTeX) — required only for `Tex`, `TexText`, `Brace`
