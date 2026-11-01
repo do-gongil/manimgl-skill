@@ -49,6 +49,9 @@ label. See [cli-config.md](cli-config.md) for why each exists.
 ## Numbers on screen come from computation
 
 ```python
+DURATION, N_SAMPLES = 1.0, 1000                # one-second window
+COMPONENTS = [(3, 1.0, BLUE), (9, 0.5, RED)]   # (frequency Hz, amplitude, color)
+
 def spectrum(components):
     t = np.arange(N_SAMPLES) * DURATION / N_SAMPLES
     signal = sum(a * np.sin(TAU * f * t) for f, a, _ in components)

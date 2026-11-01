@@ -14,11 +14,13 @@ Exit code 1 when anything is marked FAIL.
 import argparse
 import importlib
 import importlib.util
+import locale
 import os
 import platform
 import shutil
 import subprocess
 import sys
+import sysconfig
 import warnings
 
 OK, WARN, FAIL = "ok  ", "WARN", "FAIL"
@@ -31,7 +33,8 @@ CJK_FONTS = {
 
 def run(cmd):
     try:
-        p = subprocess.run(cmd, capture_output=True, text=True, timeout=20)
+        # errors="replace": output invalid in the locale codec (cp949) otherwise leaves stdout None
+        p = subprocess.run(cmd, capture_output=True, text=True, errors="replace", timeout=20)
         return (p.stdout + p.stderr).strip()
     except (OSError, subprocess.TimeoutExpired):
         return ""
@@ -64,11 +67,24 @@ def check_manimlib(rows, fixes):
         else:
             rows.append((FAIL, f"manimlib import failed: {e}"))
         return
+    except UnicodeDecodeError:
+        # manimlib loads ./custom_config.yml at import; check_config reports the cause
+        rows.append((FAIL, "manimlib import failed decoding custom_config.yml"))
+        return
     finally:
         sys.argv = argv
     rows.append((OK, f"manimlib {getattr(m, '__version__', '?')} at {os.path.dirname(m.__file__)}"))
-    if not shutil.which("manimgl"):
+    script = shutil.which("manimgl")
+    if not script:
         rows.append((WARN, "manimgl script not on PATH (pip's Scripts dir); run `python -m manimlib` instead"))
+    else:
+        # get_preferred_scheme is 3.10+; manimgl still supports 3.7-3.9
+        user = sysconfig.get_preferred_scheme("user") if hasattr(sysconfig, "get_preferred_scheme") else f"{os.name}_user"
+        mine = {os.path.normcase(os.path.realpath(sysconfig.get_path("scripts", s)))
+                for s in (sysconfig.get_default_scheme() if hasattr(sysconfig, "get_default_scheme") else None, user) if s}
+        mine.add(os.path.normcase(os.path.realpath(sysconfig.get_path("scripts"))))
+        if os.path.normcase(os.path.realpath(os.path.dirname(script))) not in mine:
+            rows.append((WARN, f"`manimgl` on PATH ({script}) belongs to another Python; this report covers {sys.executable}. Use `{sys.executable} -m manimlib`"))
     if importlib.util.find_spec("manim") is not None:
         rows.append((WARN, "Manim CE ('manim') is also installed; keep imports as 'from manimlib import *'"))
 
@@ -154,9 +170,17 @@ def check_config(rows, fixes):
         return
     with open(path, "rb") as f:
         raw = f.read()
-    if any(b > 127 for b in raw):
-        rows.append((FAIL, "custom_config.yml contains non-ASCII bytes; crashes on cp949 locales"))
+    enc = locale.getpreferredencoding(False)  # manimlib opens the config with this codec
+    try:
+        raw.decode(enc)
+        undecodable = False
+    except (UnicodeDecodeError, LookupError):
+        undecodable = True
+    if undecodable:
+        rows.append((FAIL, f"custom_config.yml is not readable as {enc} (the locale codec manimlib uses); manimgl crashes at startup"))
         fixes.append("make custom_config.yml ASCII-only (comments included)")
+    elif any(b > 127 for b in raw):
+        rows.append((WARN, f"custom_config.yml has non-ASCII bytes; fine under {enc}, crashes on cp949 and other non-UTF-8 locales"))
     else:
         rows.append((OK, "custom_config.yml is ASCII-only"))
     for line in raw.decode("ascii", "replace").splitlines():

@@ -1,0 +1,19 @@
+name: check-references
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1"  # weekly: catch a new manimgl release that renames an API
+
+jobs:
+  check:
+    # manimpango ships no Linux wheels; Windows installs from wheels only
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install manimgl audioop-lts "setuptools<81"
+      - run: python scripts/check_references.py

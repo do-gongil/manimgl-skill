@@ -18,6 +18,8 @@ ManimGL is 3Blue1Brown's personal rendering engine. It is **not** Manim Communit
 Edition. Both are called "Manim", both define a class named `Tex`, and the two
 mean opposite things. Confirm which engine the project uses before writing a line.
 
+Verified against manimgl 1.7.2 on Python 3.13; other versions are untested.
+
 Detect the engine from the project:
 
 - `from manimlib import *` / `manimgl` CLI / `custom_config.yml` → **ManimGL, this skill**
@@ -137,7 +139,8 @@ Tighten typography, color, and spacing after motion works — not before.
 **Default to English.** Labels, titles and annotations are English unless the
 user asks for another language, or the surrounding project is already in one.
 Conversing in another language is not by itself such a request — ask if unsure.
-Non-Latin scripts additionally need the font and animation care described in
+Why: Latin labels work with the default font and with `Write`; non-Latin scripts
+need a platform font and a different reveal animation, described in
 [references/api-core.md](references/api-core.md).
 
 The animation carries the argument. A sentence that narrates what the viewer is

@@ -88,7 +88,7 @@ appearing over time.
 Arc(start_angle=0, angle=TAU/4, radius=1.0, arc_center=ORIGIN)
 ArcBetweenPoints(start, end, angle=TAU/4)
 Circle(start_angle=0, stroke_color=RED)
-Dot(point=ORIGIN, radius=DEFAULT_DOT_RADIUS, fill_color=DEFAULT_MOBJECT_COLOR)
+Dot(point=ORIGIN, radius=DEFAULT_DOT_RADIUS, fill_color=WHITE)
 SmallDot(point=ORIGIN)
 Ellipse(width=2.0, height=1.0)
 Annulus(inner_radius=1.0, outer_radius=2.0, fill_opacity=1.0)
@@ -126,7 +126,7 @@ Cross(mobject, stroke_color=RED)
 Underline(mobject, buff=SMALL_BUFF, stretch_factor=1.2)
 Brace(mobject, direction=DOWN, buff=0.2)          # needs LaTeX
 BraceLabel(obj, text, brace_direction=DOWN, label_scale=1.0)
-LineBrace(line, direction=UP)
+BraceText(obj, text, brace_direction=DOWN)         # TexText label; needs LaTeX
 ```
 
 `Brace` methods: `get_text(*text)`, `get_tex(*tex)`, `put_at_tip(mob)`,
