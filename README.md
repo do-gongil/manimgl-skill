@@ -178,6 +178,8 @@ skills/manimgl-video/
    ├─ templates/             common.py helpers + project CLAUDE.md, used by /manimgl:init
    ├─ smoke_test.py          geometry + Text only — no LaTeX needed
    └─ equation_graph.py      Tex + Axes + ValueTracker
+scripts/
+└─ check_references.py      code-block names vs manimlib exports; run by CI on push and weekly
 ```
 
 `examples/gaussian_splatting.py` is a complete seven-beat scene written with the
@@ -186,8 +188,11 @@ skill, kept as a reference for structure (see `references/patterns.md`).
 ## How it was built
 
 API signatures were extracted from `manimlib` source with an AST pass, not from
-memory. Every class, function and method named in the reference files was checked
-against `manimlib`'s actual export surface.
+memory. `scripts/check_references.py` re-checks every class and constant used in
+the code blocks of `SKILL.md` and `references/` against `from manimlib import *`;
+CI runs it on every push and weekly, so a manimgl release that renames an API
+fails the build instead of leaving the references silently stale. It does not
+check method names or keyword arguments.
 
 Both assets were then rendered. That caught what static checking could not:
 `get_tangent_line()` takes no `color` kwarg, `add_coordinate_labels` defaults to

@@ -9,6 +9,8 @@ Each frame is `manimgl file.py Scene -s -w -n 0,K`: construct() runs with every
 animation skipped (end states applied instantly) and stops right before animation
 K, then the frame is saved. Index K counts self.play() AND self.wait() calls from
 0, in the order they execute. Output: frames/<Scene>_<K>.png, or <Scene>_final.png.
+Every frame is a separate manimgl run that re-executes construct() up to K, so
+asking for many frames of a long or compute-heavy scene takes a while.
 
 Stdlib only; runs manimlib through the current interpreter, so the `manimgl`
 script does not need to be on PATH.
@@ -21,14 +23,17 @@ import subprocess
 import sys
 
 TRACE = """
-import inspect, sys
+import inspect, os, sys
 sys.argv = ["manimgl", {file!r}, {scene!r}, "-s", "-w", "-l", "--video_dir", {tmp!r}, "--file_name", "_trace"]
 import manimlib
 from manimlib.scene.scene import Scene
 _orig = Scene.pre_play
+_norm = lambda p: os.path.normcase(os.path.realpath(p))
+_target = _norm({file!r})
 def pre_play(self):
     for fr in inspect.stack()[1:]:
-        if fr.filename.replace("\\\\", "/").endswith({file!r}.replace("\\\\", "/")):
+        # path equality, not suffix: a user file named scene.py must not match manimlib/scene/scene.py
+        if _norm(fr.filename) == _target:
             src = fr.code_context[0].strip() if fr.code_context else ""
             print(f"SNAP {{self.num_plays:3d}}  L{{fr.lineno:<4d}} {{src}}")
             break
@@ -46,7 +51,7 @@ def list_calls(scene_file, scene):
     import tempfile
     with tempfile.TemporaryDirectory() as tmp:
         code = TRACE.format(file=scene_file, scene=scene, tmp=tmp)
-        p = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True)
+        p = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, errors="replace")
     lines = [ln[5:] for ln in p.stdout.splitlines() if ln.startswith("SNAP ")]
     if p.returncode != 0 or not lines:
         tail = "\n".join((p.stdout + p.stderr).strip().splitlines()[-15:])
@@ -60,7 +65,7 @@ def render(scene_file, scene, index, out_dir, quality):
            "--video_dir", out_dir, "--file_name", name]
     if index is not None:
         cmd += ["-n", f"0,{index}"]
-    p = subprocess.run(cmd, capture_output=True, text=True)
+    p = subprocess.run(cmd, capture_output=True, text=True, errors="replace")
     out = os.path.join(out_dir, name + ".png")
     if p.returncode != 0 or not os.path.exists(out):
         tail = "\n".join((p.stdout + p.stderr).strip().splitlines()[-15:])
@@ -79,8 +84,8 @@ def main():
     args = ap.parse_args()
 
     with open(args.scene_file, encoding="utf-8") as f:
-        if not re.search(rf"^class {re.escape(args.scene)}\(", f.read(), re.M):
-            # manimgl silently falls back to another scene when the name is unknown
+        # module level only: manimgl finds top-level classes and silently falls back to another scene otherwise
+        if not re.search(rf"^class\s+{re.escape(args.scene)}\s*\(", f.read(), re.M):
             raise SystemExit(f"no `class {args.scene}(` in {args.scene_file}")
 
     if args.list:
