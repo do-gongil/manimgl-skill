@@ -2,6 +2,7 @@ name: check-references
 
 on:
   push:
+    branches: [main]  # branch pushes are covered by pull_request; avoids duplicate runs
   pull_request:
   schedule:
     - cron: "0 6 * * 1"  # weekly: catch a new manimgl release that renames an API
